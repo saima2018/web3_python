@@ -37,16 +37,10 @@ String token = hmac_sha256(resultStr, secretKey);// HMAC-SHA256
 appId=20070948372, time=1502342342235, token=上方生成的token
 ```
 
-##### API返回状态说明:
+##### API response code:
 ```
-199        Failure (失败)
-200        Successful (成功)
-
-101        API not found (未知的API请求)
-102        Token verification failed (Token验证失败)
-103        Token has expired (Token已过期)
-104        Parameter error (请求的参数错误)
-110        Service internal error (服务内部错误)
+199        Failure 
+200        Successful 
 ```
 
 
