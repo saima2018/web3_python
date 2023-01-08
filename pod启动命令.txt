@@ -1,0 +1,11 @@
+查看运行：
+kubectl get pods -n pre-planckx
+
+进入pod：
+kubectl exec -it deployment-pre-planckx2-web3-7fc4b8bb4d-jhppl    -n pre-planckx  -- /bin/bash
+
+plk_web3服务：
+159.138.99.60
+22
+root
+Linux@909
