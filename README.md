@@ -11,10 +11,7 @@
 ### Generate TRC20/ERC20 address: **/creation/address/{type}** `POST`
 
 ###### Parameters:
-* `{type}` _取值范围: trc20 | erc20 (BEP20也使用erc20)_ 'Mandatory'
-* `ownerAddress` _仅type为trc20时，可使用ownerAddress激活新生成地址, 须确保ownerAddress账户&gt;2 TRX_  'Optional'
-* `accountName` _仅type为trc20时，可修改新地址的账户名称, 需确保区块链网络唯一。如有该参数, 需同时传入ownerAddress地址_  'Optional'
-
+* `{type}` _ Range: trc20 | erc20 _ 'Mandatory'
 ###### return:
 ```
 {
@@ -22,52 +19,18 @@
     "msg": "Successful",
     "body": {
         "address": "TDX5JMyM15sDxHSJa61kt7s8Kx3tmYSRVd",
-        "status": "NEW", // 见下方返回字段说明
-        "time": 1644569157421
-    }
-}
-```
-
-###### 返回参数`status`字段说明:
- |状态|顺序|说明|
- |:---|:---|:---|
- |**`ALL`**|**5**|全部完成|
- |**`APPROVED`**|**4**|授信完成|
- |**`TRANSFER`**|**3**|转入TRX完成|
- |**`ACTIVATED`**|**2**|激活完成(当授信额&gt;0时, 此步跳过)|
- |**`NEW`**|**1**|已生成新地址|
-
-
-### 生成TRC20新地址(含自动激活、授信): **/autocreation/address/trc20** `POST`
-
-###### parameters:
-* `spender` _授信受托人地址, 该地址账户的TRX&ge;10, 否则可能激活与授信失败_ 'Mandatory'
-* `symbolOrAddr` _代币符号或Contract Address, 如: USDT、TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t_ 'Mandatory'
-* `accountName` _账户名称，为地址指定账户名称, 需确保区块链网络唯一_  'Optional'
-* `transferTrx` _从spender向新生成地址转入TRX数量, 便于激活和授信使用, 默认`10`_  'Optional'
-* `creditLine` _授信额度, 新地址向spender地址授信, 默认`10000000`_  'Optional'
-
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "address": "TDX5JMyM15sDxHSJa61kt7s8Kx3tmYSRVd",
-        "status": "ALL", // 见上方说明
+        "status": "NEW",
         "time": 1644569157421
     }
 }
 ```
 
 
-### 获取一个地址账户信息: **/account/{type}** `GET`
+### Get address info: **/account/{type}** `GET`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `address` _账户地址_ 'Mandatory'
-* `chain` _当type=erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `address` _account address_ 'Mandatory'
 
 ###### return:
 ```
@@ -76,22 +39,21 @@
     "msg": "Successful",
     "body": {
         "id": "",
-        "name": "Test001", // 账户名称
-        "balance": "1886.45932", // 账户总价值（单位: TRX|ETH）
-        "address": "TVvd6UhfRnQoAUUQqpStXpyWasbFWKmLNb",// TRC20 | ERC20
-        "createTime": 1624002276000 // 0:表示未知
+        "name": "Test001", // account name
+        "balance": "1886.45932", // account balance
+        "address": "xxxxxxxxxx",// TRC20 | ERC20
+        "createTime": 1624002276000 
     }
 }
 ```
 
 
-### 获取一个Contract Address或代币信息: **/contract/{type}/{symbolOrAddr}** `GET`
+### Get info on Contract Address or token: **/contract/{type}/{symbolOrAddr}** `GET`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `{symbolOrAddr}` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `from` _账户地址_ 'Mandatory'
-* `chain` _当type=erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `{symbolOrAddr}` _token symbol or Contract Address 'Mandatory'
+* `from` _address_ 'Mandatory'
 
 ###### return:
 ```
@@ -99,22 +61,21 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "name": "Test Token 01", // token 名称
-        "symbol": "TET", // token符号
-        "decimals": 6,// token精度
-        "totalSupply": 100000000 // 总发行量:1亿
+        "name": "Test Token 01", // token name
+        "symbol": "TET", // token symbol
+        "decimals": 6,// token decimals
+        "totalSupply": 100000000 // total supply
     }
 }
 ```
 
 
-### 获取一个地址的ERC20/TRC20代币余额: **/balance/{type}** `GET`
+### Get ERC20/TRC20 balance of address: **/balance/{type}** `GET`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `address` _账户地址_ 'Mandatory'
-* `symbolOrAddr` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `chain` _当type=erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `address` _address_ 'Mandatory'
+* `symbolOrAddr` _symbol or Contract Address 'Mandatory'
 
 ###### return:
 ```
@@ -130,13 +91,12 @@
 ```
 
 
-### 获取一个代币精度: **/decimals/{type}/{symbolOrAddr}** `GET`
+### Get token decimals: **/decimals/{type}/{symbolOrAddr}** `GET`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `{symbolOrAddr}` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `owner` _账户地址_ 'Mandatory'
-* `chain` _当type=erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `{symbolOrAddr}` _token symbol or Contract Address 'Mandatory'
+* `owner` _address_ 'Mandatory'
 
 ###### return:
 ```
@@ -145,21 +105,20 @@
     "msg": "Successful",
     "body": {
         "decimals": 18,
-        "symbolOrAddr": "usdt" // 代币符号或Contract Address，取决于URL的参数
+        "symbolOrAddr": "usdt" // token symbol or Contract Address, depending on url parameters
     }
 }
 ```
 
 
-### 向一个地址转出TRX/ETH: **/transfer/{symbol}** `POST`
+### send TRX/ETH to address: **/transfer/{symbol}** `POST`
 
 ###### parameters:
-* `{symbol}` _取值范围: trx | eth_ 'Mandatory'
-* `from` _付款地址_ 'Mandatory'
-* `to` _收款地址_ 'Mandatory'
-* `amount` _转账数量_ 'Mandatory'
-* `param` _回调参数, 需URL Encode编码。当交易被确认固化后, 触发回调。_  'Optional'
-* `chain` _当{symbol}为eth时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{symbol}` _ Range: trx | eth_ 'Mandatory'
+* `from` _sender_ 'Mandatory'
+* `to` _receiver_ 'Mandatory'
+* `amount` _amount_ 'Mandatory'
+* `chain` _Range: eth(Default) | bsc | polygon | _  'Optional'
 
 ###### return:
 ```
@@ -171,28 +130,115 @@
         "time": 1644748690254
     }
 }
-```
-###### TRX转账回调Json格式:
+
+
+### Send TRC20/ERC20 token to address: **/transfer/{type}** `POST`
+
+###### parameters:
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `from` _sender_ 'Mandatory'
+* `to` _receiver_ 'Mandatory'
+* `amount` _amount_ 'Mandatory'
+* `symbolOrAddr` _token symbol or Contract Address_ 'Mandatory'
+* `memo` _memo that goes on chain_  'Optional'
+* `chain` _Range: eth(Default) | bsc | polygon | _  'Optional'
+
+###### return:
 ```
 {
-    "resultHash":"2d0cab65f2530a9a5192c0b9daa0a6380b981507cb49fa44153b57a92adbeec0",
-    "status": "SUCCESS", // FAILED 表示发送交易失败
-    "time":1644750266224
+    "state": 200,
+    "msg": "Successful",
+    "body": {
+        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
+        "status": "SUCCESS", // FAILED 
+        "time": 1644749120341
+    }
 }
 ```
 
 
-### 向一个地址转出TRC20/ERC20的代币: **/transfer/{type}** `POST`
+### send on behalf TRC20/ERC20 to address: **/transferFrom/{type}** `POST`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `from` _付款地址_ 'Mandatory'
-* `to` _收款地址_ 'Mandatory'
-* `amount` _转账数量_ 'Mandatory'
-* `symbolOrAddr` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `memo` _备注内容, 同步到区块链交易中_  'Optional'
-* `param` _回调参数, 需URL Encode编码。当交易被确认固化后, 触发回调。_  'Optional'
-* `chain` _当{type}为erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `from` _sender_ 'Mandatory'
+* `to` _receiver_ 'Mandatory'
+* `spender` _spender that sends the tx_ 'Mandatory'
+* `amount` _amount_ 'Mandatory'
+* `symbolOrAddr` _token symbol or Contract Address_ 'Mandatory'
+* `memo` _memo that goes on chain_  'Optional'
+* `chain` _Range: eth(Default) | bsc | polygon | _  'Optional'
+
+
+###### return:
+```
+{
+    "state": 200,
+    "msg": "Successful",
+    "body": {
+        "resultHash": "xxxxxxxxxxxxxxxx",
+        "status": "SUCCESS", // FAILED 
+        "time": 1644749120341
+    }
+}
+```
+
+
+
+
+### Mint token: **/mint/{chain}/erc20/{symbolOrAddr}** `POST`
+
+###### parameters:
+* `{chain}` _Range: eth(Default) | bsc | polygon | _ 'Mandatory'
+* `{symbolOrAddr}` _token symbol or Contract Address_ 'Mandatory'
+* `owner` _Contract owner_ 'Mandatory'
+* `amount` _amount_ 'Mandatory'
+
+###### return:
+```
+{
+    "state": 200,
+    "msg": "Successful",
+    "body": {
+        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
+        "status": "SUCCESS", // FAILED 
+        "time": 1644749120341
+    }
+}
+```
+
+### Burn tokens: **/burn/{chain}/erc20/{symbolOrAddr}** `POST`
+
+###### parameters:
+* `{chain}` _Range: eth(Default) | bsc | polygon | _ 'Mandatory'
+* `{symbolOrAddr}` _token symbol or Contract Address_ 'Mandatory'
+* `owner` _Contract owner_ 'Mandatory'
+* `amount` _amount_ 'Mandatory'
+
+###### return:
+```
+{
+    "state": 200,
+    "msg": "Successful",
+    "body": {
+        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
+        "status": "SUCCESS", // FAILED 
+        "time": 1644749120341
+    }
+}
+```
+
+
+### Send tx authorisation: **/approve/{type}** `POST`
+
+###### parameters:
+* `{type}` _ Range: trc20 | erc20_ 'Mandatory'
+* `owner` _authorisor_ 'Mandatory'
+* `spender` _spender that actually sends a transaction_ 'Mandatory'
+* `symbolOrAddr` _token symbol or Contract Address_ 'Mandatory'
+* `creditLine` _credit sent from owner to spender, Default`10000000`_  'Optional'
+* `memo` _memo that goes on chain_  'Optional'
+* `chain` _Range: eth(Default) | bsc | polygon | _  'Optional'
 
 ###### return:
 ```
@@ -207,20 +253,15 @@
 }
 ```
 
-
-### 向一个地址委托转出TRC20/ERC20的代币: **/transferFrom/{type}** `POST`
+### Deploy ERC20 token Contract: **/deploy/{chain}/erc20** `POST`
 
 ###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `from` _付款地址_ 'Mandatory'
-* `to` _收款地址_ 'Mandatory'
-* `spender` _受托人地址, spender地址操作from地址转账给to地址_ 'Mandatory'
-* `amount` _转账数量_ 'Mandatory'
-* `symbolOrAddr` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `memo` _备注内容, 同步到区块链交易中_  'Optional'
-* `param` _回调参数, 需URL Encode进行编码。当交易被确认固化后, 触发回调。_  'Optional'
-* `chain` _当{type}为erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
-
+* `{chain}` _ Range: eth | bsc | polygon 'Mandatory'
+* `owner` _Contract creator_ 'Mandatory'
+* `name` _token name_ 'Mandatory'
+* `symbol` _token symbol_ 'Mandatory'
+* `decimals` _token decimals,  Range: 1-20_  'Optional'
+* `totalSupply` _Token total supply, eg: 100000_  'Optional'
 
 ###### return:
 ```
@@ -228,127 +269,23 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "resultHash": "xxxxxxxxxxxxxxxxxxxx",
+        "content": "xxxxxxxxxxxxxxx",
+        "status": "SUCCESS", // FAILED 
         "time": 1644749120341
     }
 }
 ```
 
-
-###### trc20 transfer/transferFrom 回调Json格式:
-```
-{
-    "resultHash":"5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-    "status": "SUCCESS", // FAILED 表示发送交易失败
-    "confirmed": "REVERT", // SUCCESS 表示区块链确认成功
-    "time":1644749120341
-}
-```
-
-
-### 增发代币: **/mint/{chain}/erc20/{symbolOrAddr}** `POST`
+### NFT transaction: **/nft/{chain}/{protocol}** `POST`
 
 ###### parameters:
-* `{chain}` _当{type}为erc20时，取值范围：eth(默认) | bsc | polygon | valar_ 'Mandatory'
-* `{symbolOrAddr}` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `owner` _Contract拥有人地址_ 'Mandatory'
-* `amount` _增发数量，需大于0。如增发10万, 表示:100000_ 'Mandatory'
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
-        "time": 1644749120341
-    }
-}
-```
-
-### 销毁代币: **/burn/{chain}/erc20/{symbolOrAddr}** `POST`
-
-###### parameters:
-* `{chain}` _当{type}为erc20时，取值范围：eth(默认) | bsc | polygon | valar_ 'Mandatory'
-* `{symbolOrAddr}` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `owner` _Contract拥有人地址_ 'Mandatory'
-* `amount` _销毁数量，需大于0。如销毁10万, 表示:100000_ 'Mandatory'
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
-        "time": 1644749120341
-    }
-}
-```
-
-
-### 发起授信委托: **/approve/{type}** `POST`
-
-###### parameters:
-* `{type}` _取值范围: trc20 | erc20_ 'Mandatory'
-* `owner` _委托发起人/实际转出地址, 该地址账户的TRX&ge;10或ETH&ge;0.0055(价值&ge;15usdt), 否则可能授信失败_ 'Mandatory'
-* `spender` _委托受托人/发起转账操作的地址_ 'Mandatory'
-* `symbolOrAddr` _代币符号或Contract Address, 如USDT、0x4008D09B0BD2B96E3325D43da778D545E9fa9104_ 'Mandatory'
-* `creditLine` _授信额度, owner地址向spender地址授信转账额度, 默认`10000000`_  'Optional'
-* `memo` _备注内容, 同步到区块链交易中_  'Optional'
-* `param` _回调参数, 需URL Encode编码。当交易被确认固化后, 触发回调。_  'Optional'
-* `chain` _当{type}为erc20时，取值范围：eth(默认) | bsc | polygon | valar_  'Optional'
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
-        "time": 1644749120341
-    }
-}
-```
-
-### 部署ERC20代币Contract: **/deploy/{chain}/erc20** `POST`
-
-###### parameters:
-* `{chain}` _取值范围: eth | bsc | polygon | valar_ 'Mandatory'
-* `owner` _Contract创建人地址_ 'Mandatory'
-* `name` _代币名称_ 'Mandatory'
-* `symbol` _代币符号_ 'Mandatory'
-* `decimals` _代币精度, 取值范围: 1-20_  'Optional'
-* `totalSupply` _代币发行总量, 如10万总量: 100000_  'Optional'
-* `param` _回调参数, 需URL Encode编码。当交易被确认固化后, 触发回调。_  'Optional'
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "content": "0x84ecf4c860f6b5a02ed5e879910d85515f2efa19",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
-        "time": 1644749120341
-    }
-}
-```
-
-### NFT交易: **/nft/{chain}/{protocol}** `POST`
-
-###### parameters:
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
-* `{protocol}` _NFT protocol，取值范围: erc721 | erc1155_ 'Mandatory'
-* `from` _发起交易的地址_ 'Mandatory'
+* `{chain}` _Network: eth | bsc | polygon | _ 'Mandatory'
+* `{protocol}` _NFT protocol Range: erc721 | erc1155_ 'Mandatory'
+* `from` _tx sender_ 'Mandatory'
 * `to` _Contract Address_ 'Mandatory'
-* `data` _经Function.encode的值_ 'Mandatory'
-* `amount` _交易数量,需自乘精度。默认`0.00`_  'Optional'
+* `data` _ value after Function.encode_ 'Mandatory'
+* `amount` _tx amount Default`0.00`_  'Optional'
 
 ###### return:
 ```
@@ -356,22 +293,22 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "resultHash": "xxxxxxxxxxxxxxxxxxxxxx",
+        "status": "SUCCESS", // FAILED 
         "time": 1644749120341
     }
 }
 ```
 
 
-### 查询NFT元数据: **/nft/tokenuri/{chain}/{protocol}** `GET`
+### Query NFT metadata: **/nft/tokenuri/{chain}/{protocol}** `GET`
 
 ###### parameters:
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
-* `{protocol}` _NFT protocol，取值范围: erc721 | erc1155_ 'Mandatory'
+* `{chain}` _Network: eth | bsc | polygon | _ 'Mandatory'
+* `{protocol}` _NFT protocol Range: erc721 | erc1155_ 'Mandatory'
 * `contract` _Contract Address_ 'Mandatory'
 * `tokenId` _NFT的Token Id_ 'Mandatory'
-* `funcName` _取值范围: tokenURI(默认) | uri_  'Optional'
+* `funcName` _ Range: tokenURI(Default) | uri_  'Optional'
 
 
 ###### return:
@@ -380,20 +317,19 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "content": "https://xxx.ipfs.io/xx/c.json", // token uri, 如为""表示未获取到token uri
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "content": "https://xxx.ipfs.io/xx/c.json", // token uri, ""for not found
+        "status": "SUCCESS", // FAILED 
         "time": 1644749120341
     }
 }
 ```
 
-
-### 根据NFT的索引获取TokenID: **/nft/tokenid/{index}/{chain}/{protocol}** `GET`
+### Get owner of NFT by TokenID: **/nft/ownerof/{tokenId}/{chain}/{protocol}** `GET`
 
 ###### parameters:
-* `{index}` _&ge;0的数字, 并且须确保&lt; NFT的totalSupply_ 'Mandatory'
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
-* `{protocol}` _NFT protocol，取值范围: erc721 | erc1155_ 'Mandatory'
+* `{tokenId}` _&ge;0 string_ 'Mandatory'
+* `{chain}` _Network: eth | bsc | polygon | _ 'Mandatory'
+* `{protocol}` _NFT protocol Range: erc721 | erc1155_ 'Mandatory'
 * `contract` _Contract Address_ 'Mandatory'
 
 
@@ -403,19 +339,18 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "content": "1032",// token id, 如为""表示未获取到TokenId
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "content": "0xxxxxxxxxxxxx",// "" for not found
+        "status": "SUCCESS", // FAILED 
         "time": 1644749120341
     }
 }
 ```
 
-### 根据NFT TokenID获取NFT拥有者地址: **/nft/ownerof/{tokenId}/{chain}/{protocol}** `GET`
+### Get total supply of nft **/nft/totalsupply/{chain}/{protocol}** `GET`
 
 ###### parameters:
-* `{tokenId}` _&ge;0的字符串_ 'Mandatory'
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
-* `{protocol}` _NFT protocol，取值范围: erc721 | erc1155_ 'Mandatory'
+* `{chain}` _Network: eth | bsc | polygon | _ 'Mandatory'
+* `{protocol}` _NFT protocol Range: erc721 | erc1155_ 'Mandatory'
 * `contract` _Contract Address_ 'Mandatory'
 
 
@@ -425,29 +360,8 @@
     "state": 200,
     "msg": "Successful",
     "body": {
-        "content": "0x345558371fF5d0b7F08066906864318c61f37799",// NFT拥有者地址, 如为""表示未获取到地址
-        "status": "SUCCESS", // FAILED 表示发送交易失败
-        "time": 1644749120341
-    }
-}
-```
-
-### 根据NFTContract获取NFT发行总量: **/nft/totalsupply/{chain}/{protocol}** `GET`
-
-###### parameters:
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
-* `{protocol}` _NFT protocol，取值范围: erc721 | erc1155_ 'Mandatory'
-* `contract` _Contract Address_ 'Mandatory'
-
-
-###### return:
-```
-{
-    "state": 200,
-    "msg": "Successful",
-    "body": {
-        "content": "3056",// totalSupply, 如为""表示未获取到总量
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "content": "3056",// totalSupply, "" for not found
+        "status": "SUCCESS", // FAILED for failure to send tx 
         "time": 1644749120341
     }
 }
@@ -455,10 +369,10 @@
 
 
 
-### 根据NFTContract批量获取tokenId、tokenUri、ownerAddress等: **/nft/tokenall/{chain}/{protocol}** `GET` 
+### Batch query tokenId, tokenUri, ownerAddress, etc. for nft contract: **/nft/tokenall/{chain}/{protocol}** `GET`
 
 ###### parameters:
-* `{chain}` _Network: eth | bsc | polygon | valar_ 'Mandatory'
+* `{chain}` _Network: eth | bsc | polygon | _ 'Mandatory'
 * `{protocol}` _NFT protocol，range: erc721 | erc1155_ 'Mandatory'
 * `contract` _Contract Address_ 'Mandatory'
 
@@ -469,7 +383,7 @@
     "state": 200,
     "msg": "Successful",
     "body":{
-        "totalSupply": 0 // 0表示未查询到NFT总量，只有当总量>0时进行批量回调操作
+        "totalSupply": 0 // 0 for not found
     }
 }
 ```
@@ -489,7 +403,7 @@
 
 
 
-### NFT assets under address: **/nft/assets/{chain}/{address}** `GET` 
+### NFT assets under address: **/nft/assets/{chain}/{address}** `GET`
 
 ###### parameters:
 * `{chain}` _Network: eth | bsc | polygon_ 'Mandatory'
