@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Time : 2022/10/10 10:12
 # @Author : masai
-# @Email : sai.ma@spacexwalk.com
 # @File : main.py
 # @Software: PyCharm
 import copy
@@ -26,7 +25,7 @@ formatter = Formatter(fmt='%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.setLevel(logging.INFO)
-print('PlanckX Web3 Service Started.')
+print('Web3 Service Started.')
 
 apikey_alchemy = ''
 apikey_moralis = ''
@@ -837,7 +836,6 @@ def nftAssets(chain, wallet):
         }
         r = requests.get(url_, headers=headers, proxies=proxies)
         resp = json.loads(r.content.decode())
-        # print('1111111111',resp)
         json_response['body']['status'] = 'SUCCESS'
         result = resp['result']
         try:

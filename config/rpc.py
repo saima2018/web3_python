@@ -38,6 +38,5 @@ polygon_test_rpc = {
     }
 
 valar_test_rpc = {
-    'valar_test1' : 'http://119.8.190.71:8899',
-    # 'valar_prod1' : 'http://35.77.249.41:8899',
+    'valar_test1' : 'http://x.x.x.x:8899',
 }
