@@ -1,11 +1,8 @@
 
 ##  Authentication must be added for external requests
 
-##### API response code:
-```
-199        Failure 
-200        Successful 
-```
+1. Install necessary packages from requirements.txt
+2. If running as a standalone service, execute command: python main.py 
 
 
 ### Generate TRC20/ERC20 address: **/creation/address/{type}** `POST`
@@ -247,7 +244,7 @@
     "msg": "Successful",
     "body": {
         "resultHash": "5b6fda8cf8755ffd7e1ab20502369ad32a3726471e0bf63de7d68106284b23f6",
-        "status": "SUCCESS", // FAILED 表示发送交易失败
+        "status": "SUCCESS", // FAILED 
         "time": 1644749120341
     }
 }
@@ -393,7 +390,7 @@
     "chainName": "ETH",
     "protocl": "erc721",
     "contract":"0x0574c34385b039c2bb8db898f61b7767024a9449", // NFTContract Address
-    "index":940,   // Contract索引编号
+    "index":940,   // Contract index
     "tokenId":"941", // token Id
     "owner":"0x46e0dcceb5357f1c59a9de1b29173f85ddb8198f", // owner address
     "url":"https://joyworld.azurewebsites.net/api/HttpTrigger?id\u003d941", // token URI
