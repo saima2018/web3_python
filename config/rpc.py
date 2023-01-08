@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Time : 2022/10/26 15:51
 # @Author : masai
-# @Email : sai.ma@spacexwalk.com
 # @File : rpc.py
 # @Software: PyCharm
 

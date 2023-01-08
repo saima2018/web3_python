@@ -211,7 +211,7 @@ def createAccount(chain='eth'):
     addr = str(new_account._address)
     # print('Created: ', new_account._address, (new_account._private_key).hex())
     with open('./wallet/' + addr.lower() + '.keystore', 'w') as f:
-        f.write(json.dumps(new_account.encrypt(addr[-4:])))
+        f.write(json.dumps(new_account.encrypt('password')))
     f.close()
     return addr
 
@@ -223,7 +223,7 @@ def getPK(addr):
     if str(addr).lower() in migrated_addresses:
         pk = Account.decrypt(encrypted, '')
     else:
-        pk = Account.decrypt(encrypted, addr[-4:])
+        pk = Account.decrypt(encrypted, 'password')
     # print(pk.hex())
     return pk.hex()
 
