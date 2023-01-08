@@ -28,8 +28,8 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 print('PlanckX Web3 Service Started.')
 
-apikey_alchemy = 'lPAgQsEHEoaugRRwHUdrOrwHztefH7ta'
-apikey_moralis = 'G6YJtwGQbsmf25fPEQAtiZNXXKuhaWJUcOghop0hWo0Ebo1rlmkxDZRkVcTH0mA7'
+apikey_alchemy = ''
+apikey_moralis = ''
 proxies = {'http': None, 'https': None}
 response_template = {
     "state": 200,

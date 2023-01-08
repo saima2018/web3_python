@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time : 2022/10/10 10:17
 # @Author : masai
-# @Email : sai.ma@spacexwalk.com
+# @Email :
 # @File : api.py
 # @Software: PyCharm
 import web3
@@ -47,9 +47,6 @@ elif env == 'mainnet':
 
     w3_polygon_list = [Web3(Web3.HTTPProvider(rpc.polygon_rpc[k], request_kwargs= \
         {"proxies": {'https': None, 'http': None}})) for k, v in rpc.polygon_rpc.items()]
-
-    # w3_valar_list = [Web3(Web3.HTTPProvider(rpc.valar_rpc[k], request_kwargs= \
-    #     {"proxies": {'https': None, 'http': None}})) for k, v in rpc.valar_rpc.items()]
 
     chainid_eth = 1
     chainid_bsc = 56
@@ -117,23 +114,10 @@ def getBalanceByToken(address, contract, chain):
     contract = getContract(contract, chain)
     balance = contract.functions.balanceOf(address).call()
     return balance
-# from moralis import evm_api
-# def getBalanceByToken(address, contract, chain):
-#     params = {
-#         "address": "0xBf6521AF44F5D56813A93dCE548E6594Daa00794",
-#         "chain": "eth",
-#     }
-#
-#     result = evm_api.token.get_wallet_token_balances(
-#         api_key=api_key,
-#         params=params,
-#     )
-#
-#     print(result)
-#     return balance
+
 
 @retry_decorator
-def sendTransaction(send_from, value, send_to, gas=1000000, chainId=None, chain='eth'):
+def sendTransaction(send_from, value, send_to, gas=1000000, chain='eth'):
     if chain == 'eth':
         w3 = choice(w3_eth_list)
         chain_Id = chainid_eth
@@ -149,8 +133,6 @@ def sendTransaction(send_from, value, send_to, gas=1000000, chainId=None, chain=
 
     from_address = send_from
     to_address = send_to
-    # from_address = w3.toChecksumAddress(from_address)
-    # to_address = w3.toChecksumAddress(to_address)
     # Implement internal private key fetching for from_address here
     private_key = getPK(from_address)
     nonce = w3.eth.getTransactionCount(from_address)
